@@ -2,13 +2,13 @@ import { AppLayout } from '@/layouts/app-layout';
 import { Container } from '@/components/container';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard() {
+export default function Home() {
     return (
         <div>
-            <Head title="Dashboard" />
-            <Container>Dashboard page</Container>
+            <Head title="Home" />
+            <Container>Home page</Container>
         </div>
     );
 }
 
-Dashboard.layout = (page) => <AppLayout children={page} />;
+Home.layout = (page) => <AppLayout children={page} />;
