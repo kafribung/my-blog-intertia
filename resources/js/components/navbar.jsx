@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Container } from '@/components/container';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ChevronDownIcon } from 'lucide-react';
+import { IconChevronDown } from '@irsyadadl/paranoid';
 
 export function Navbar() {
     const { auth } = usePage().props;
@@ -30,7 +30,7 @@ export function Navbar() {
                                 )}
                             >
                                 Categories
-                                <ChevronDownIcon className="ml-2 h-4 w-4 duration-200 group-data-[state=open]:rotate-180" />
+                                <IconChevronDown className="ml-2 size-4 duration-200 group-data-[state=open]:rotate-180" />
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56">
                                 <DropdownMenuItem>General</DropdownMenuItem>
@@ -44,8 +44,8 @@ export function Navbar() {
                             <DropdownMenu>
                                 <DropdownMenuTrigger className="text-muted-foreground transition duration-200 hover:text-foreground focus:outline-none">
                                     <Avatar className="size-8">
-                                        <AvatarImage src="https://github.com/irsyadadl.png" />
-                                        <AvatarFallback>I</AvatarFallback>
+                                        <AvatarImage src="{auth.user.gravatar}" />
+                                        <AvatarFallback>{auth.user.initials}</AvatarFallback>
                                     </Avatar>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-56" align="end">
