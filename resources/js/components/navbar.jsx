@@ -11,6 +11,7 @@ import {
 import { Container } from '@/components/container';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { IconChevronDown } from '@irsyadadl/paranoid';
+import { Button } from './ui/button';
 
 export function Navbar() {
     const { auth } = usePage().props;
@@ -61,7 +62,9 @@ export function Navbar() {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         ) : (
-                            <NavLink href="/login">Login</NavLink>
+                            <Button asChild variant="outline">
+                                <Link href="/login">Login</Link>
+                            </Button>
                         )}
                     </div>
                 </div>
