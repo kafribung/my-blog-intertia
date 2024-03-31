@@ -17,14 +17,14 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => rand(1, 2),
+            'user_id' => \App\Models\User::factory(),
             'category_id' => rand(1, 7),
-            'thumbnail' => $this->faker->sentence(3),
             'title' => $title = $this->faker->sentence,
             'slug' => str($title)->slug(),
             'teaser' => $this->faker->paragraph,
-            'content' => $this->faker->paragraph,
-            'published_at' => $this->faker->dateTimeBetween('-1 week'),
+            'content' => $this->faker->paragraphs(4, true),
+            'status' => $status = $this->faker->randomElement(['draft', 'pending', 'published']),
+            'published_at' => $status === 'published' ? $this->faker->dateTimeBetween('-1 month', 'now') : null,
         ];
     }
 }
