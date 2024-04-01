@@ -13,6 +13,7 @@
 
     <!-- Scripts -->
     <script src="/theme.js"></script>
+    <script src="/tab.js"></script>
     @routes
     @viteReactRefresh
     @vite(['resources/js/app.jsx', "resources/js/pages/{$page['component']}.jsx"])

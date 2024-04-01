@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/layouts/app-layout';
+import AppLayout from '@/layouts/app-layout';
 import DeleteUserForm from './partials/delete-user-form';
 import UpdatePasswordForm from './partials/updat-password-form';
 import UpdateProfileInformationForm from './partials/update-profile-information-form';
@@ -6,7 +6,7 @@ import { Head } from '@inertiajs/react';
 
 export default function Edit({ auth, mustVerifyEmail, status }) {
     return (
-        <AuthenticatedLayout
+        <AppLayout
             user={auth.user}
             header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Profile</h2>}
         >
@@ -31,6 +31,6 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AppLayout>
     );
 }

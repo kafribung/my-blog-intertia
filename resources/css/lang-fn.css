@@ -1,0 +1,25 @@
+.code-container-filename:before {
+    @apply -ml-1 mr-1 size-5 shrink-0 bg-contain content-[''];
+}
+.code-container-filename:before {
+    background-image: url('./svg/code.svg');
+}
+.code-container.js .code-container-filename::before,
+.code-container.javascript .code-container-filename::before {
+    background-image: url('./svg/js.svg');
+}
+.code-container.ts .code-container-filename::before {
+    background-image: url('./svg/ts.svg');
+}
+.code-container.php .code-container-filename::before {
+    background-image: url('./svg/php.svg');
+}
+.code-container.tsx .code-container-filename::before {
+    background-image: url('./svg/tsx.svg');
+}
+.code-container.jsx .code-container-filename::before {
+    background-image: url('./svg/jsx.svg');
+}
+.code-container.blade .code-container-filename::before {
+    background-image: url('./svg/blade.svg');
+}

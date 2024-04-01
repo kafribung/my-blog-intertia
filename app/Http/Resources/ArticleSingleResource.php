@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +22,7 @@ class ArticleSingleResource extends JsonResource
             'slug' => $this->slug,
             'thumbnail' => $this->thumbnail ? Storage::url($this->thumbnail) : null,
             'teaser' => $this->teaser,
-            'content' => str($this->content)->markdown(),
+            'content' => Markdown::convert($this->content)->getContent(),
             'published_at' => $this->published_at->format('d F Y'),
             'category' => [
                 'id' => $this->category->id,

@@ -1,0 +1,250 @@
+@import 'lang-fn.css';
+
+.prose .image-extended {
+    @apply -mx-4 sm:-mx-6 md:mx-0;
+}
+.prose :where(iframe):not(:where([class~='not-prose'] *)) {
+    @apply my-6 aspect-video h-auto w-full overflow-hidden rounded-lg focus:outline-none;
+}
+.code-container > div {
+    @apply p-0;
+}
+.prose .toc-sidebar h2 {
+    @apply mb-2 text-lg font-semibold text-foreground;
+}
+.prose .toc {
+    @apply list-none pl-0 lg:hidden;
+}
+.prose .heading-permalink {
+    @apply sr-only invisible no-underline;
+}
+.prose .toc-sidebar-wrapper {
+    @apply lg:hidden;
+}
+.prose .toc-sidebar-wrapper h2:first-child {
+    @apply mt-0;
+}
+.prose .toc-sidebar-wrapper.not-prose {
+    @apply mt-5 border border-foreground/10 bg-card p-4;
+}
+.prose .toc-sidebar-wrapper.not-prose ul > li {
+    @apply text-sm leading-loose text-muted-foreground hover:text-foreground;
+}
+.prose .toc-sidebar-wrapper.not-prose ul li ul {
+    @apply ml-3.5;
+}
+.prose .toc-sidebar-wrapper.not-prose ul > li:before {
+    @apply mr-1 inline-flex h-3 w-3 items-center bg-contain text-lime-500;
+}
+.prose .prose-table {
+    @apply w-full overflow-x-auto;
+}
+.prose .prose-table td > code {
+    @apply inline-block border-transparent bg-transparent p-0 text-[0.8rem] font-medium tracking-tighter text-yellow-500;
+}
+.prose .prose-table td,
+.prose .prose-table th {
+    @apply whitespace-nowrap;
+}
+.prose li code {
+    @apply inline;
+}
+.prose h2 code,
+.prose h3 code,
+.prose h4 code,
+.prose h5 code {
+    @apply m-0 border-none text-primary;
+    background-color: transparent !important;
+    font-size: inherit !important;
+}
+.prose h2 {
+    @apply mb-4 mt-8 text-[1.6rem] font-bold sm:text-3xl;
+}
+.prose h3 {
+    @apply mb-4 mt-8 text-[1.4rem] font-bold sm:text-2xl;
+}
+.prose h3 {
+    @apply mb-4 mt-8 text-xl font-bold;
+}
+.prose h4 {
+    @apply mb-4 mt-8 text-lg font-bold;
+}
+.prose code:not(pre code) {
+    @apply m-0 inline-block rounded-[.375rem] border bg-accent px-[.25em] py-[.12em] text-[0.785rem] font-medium leading-[1.2];
+}
+.prose code:not(pre code)::before,
+.prose code:not(pre code)::after {
+    @apply content-none;
+}
+.prose :where(code):not(:where([class~='not-prose'] *))::before,
+.prose :where(code):not(:where([class~='not-prose'] *))::after {
+    @apply content-none;
+}
+.prose :where(iframe):not(:where([class~='not-prose'] *)) {
+    @apply my-6 aspect-video h-auto w-full overflow-hidden rounded-lg focus:outline-none;
+}
+.tabbed-code {
+    @apply -mx-4 my-5 overflow-hidden border-y border-gray-800 bg-gray-950 sm:-mx-6 md:mx-0 md:rounded-md md:border-y-0 md:ring-1 md:ring-gray-800;
+    .tabbed-code-nav {
+        @apply hide-scroll flex gap-x-0.5 overflow-x-auto p-2;
+        .tabbed-code-nav-button {
+            @apply z-30 whitespace-nowrap rounded-lg border border-transparent p-2 text-sm text-gray-400 transition-colors;
+            &[data-tab] {
+                @apply pl-8;
+                background-image: url('./svg/code.svg'); /* Default style */
+                background-size: 1.25rem;
+                background-repeat: no-repeat;
+                background-position: 0.3rem center;
+            }
+
+            &[data-tab*='.js'] {
+                background-image: url('./svg/js.svg');
+            }
+
+            &[data-tab*='.ts'] {
+                background-image: url('./svg/ts.svg');
+            }
+
+            &[data-tab*='.tsx'] {
+                background-image: url('./svg/tsx.svg');
+            }
+
+            &[data-tab*='.jsx'] {
+                background-image: url('./svg/jsx.svg');
+            }
+
+            &[data-tab*='.blade'] {
+                background-image: url('./svg/blade.svg');
+            }
+
+            &[data-tab*='.php'] {
+                background-image: url('./svg/php.svg');
+            }
+
+            &.active {
+                @apply border-gray-800 bg-gray-900 text-white;
+            }
+            &:hover {
+                @apply text-white;
+            }
+        }
+    }
+
+    .tabbed-code-body {
+        background-color: #292d3e;
+        .code-container {
+            @apply m-0 hidden rounded-none;
+            &.active {
+                @apply block;
+            }
+        }
+    }
+}
+.prose .code-container {
+    @apply relative -mx-4 mb-6 overflow-hidden border-y border-gray-700 bg-gray-950 ring-gray-700 dark:border-gray-800 sm:-mx-6 md:mx-0 md:rounded-lg md:border-y-0 md:ring-1 md:dark:ring-gray-800;
+}
+.prose .tabbed-code-body .code-container > div,
+.prose .code-container > div + div {
+    @apply p-0 md:max-h-[32rem] md:overflow-y-auto;
+}
+.prose .code-container-filename {
+    @apply flex items-center border-b border-gray-800 bg-gray-950 px-4 py-2 text-xs tracking-normal text-gray-300 sm:text-[0.850rem] lg:py-2.5;
+}
+.prose .code-container .copyBtn {
+    @apply absolute right-1 top-1.5 hidden size-7 rounded bg-transparent hover:bg-transparent sm:block lg:place-content-center;
+}
+.prose .code-container .copyBtn svg.copy {
+    @apply size-5 text-gray-50;
+}
+.prose .code-container .copyBtn svg.check {
+    @apply size-5 text-emerald-400;
+}
+
+/*
+Token styling for code blocks
+*/
+pre code.hljs {
+    display: block;
+    padding: 0;
+    background: transparent;
+}
+code.hljs {
+    padding: 3px 5px;
+}
+.hljs-doctag,
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable.language_ {
+    color: #93c5fd;
+}
+.hljs-attr,
+.hljs-attribute,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-title.function_ {
+    color: #93c5fd;
+}
+.hljs-title {
+    @apply text-white/80;
+}
+.hljs-class ~ .hljs-title,
+.hljs-class .hljs-title,
+.hljs-title.class_,
+.hljs-title.class_.inherited__ {
+    color: #e879f9;
+}
+.hljs-literal,
+.hljs-meta,
+.hljs-number,
+.hljs-operator,
+.hljs-selector-id,
+.hljs-variable {
+    color: #ffffff;
+}
+.hljs-meta .hljs-string,
+.hljs-regexp,
+.hljs-string {
+    color: #fed7aa;
+}
+.hljs-built_in,
+.hljs-symbol {
+    color: #f43f5e;
+}
+.hljs-code,
+.hljs-comment,
+.hljs-formula {
+    color: #cbd5e0;
+}
+.hljs-name,
+.hljs-quote,
+.hljs-selector-pseudo,
+.hljs-selector-tag {
+    color: #f43f5e;
+}
+.hljs-subst {
+    color: #d4d4d8;
+}
+.hljs-section {
+    color: #1f6feb;
+    font-weight: 700;
+}
+.hljs-bullet {
+    color: #f2cc60;
+}
+.hljs-emphasis {
+    color: #d4d4d8;
+    font-style: italic;
+}
+.hljs-strong {
+    color: #d4d4d8;
+    font-weight: 700;
+}
+.hljs-addition {
+    @apply bg-transparent text-emerald-500;
+}
+.hljs-deletion {
+    @apply bg-transparent text-red-500;
+}

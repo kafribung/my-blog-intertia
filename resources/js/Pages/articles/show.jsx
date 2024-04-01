@@ -4,9 +4,10 @@ import { Head, Link } from '@inertiajs/react';
 import { limitChars } from '@/lib/utils';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Badge } from '@/components/ui/badge';
-import { RelatedArticles } from '@/pages/partials/related-articles';
-import { Author } from '@/pages/partials/author';
-import { TableOfContents } from '@/pages/partials/table-of-contents';
+import { RelatedArticles } from '@/pages/articles/partials/related-articles';
+import { Author } from '@/pages/articles/partials/author';
+import { TableOfContents } from '@/pages/articles/partials/table-of-contents';
+import { Prose } from '@/components/prose';
 
 export default function Show({ article }) {
     return (
@@ -42,10 +43,7 @@ export default function Show({ article }) {
 
                         <p className="text-muted-foreground">{article.teaser}</p>
 
-                        <div
-                            className="prose prose-zinc max-w-3xl dark:prose-invert"
-                            dangerouslySetInnerHTML={{ __html: article.content }}
-                        />
+                        <Prose content={article.content} />
 
                         {article.tags.length > 0 ? (
                             <div className="flex items-center gap-x-2">
