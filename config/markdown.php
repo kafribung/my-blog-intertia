@@ -74,7 +74,7 @@ return [
     'renderer' => [
         'block_separator' => "\n",
         'inner_separator' => "\n",
-        'soft_break'      => "\n",
+        'soft_break' => "\n",
     ],
 
     /*
@@ -95,10 +95,10 @@ return [
     */
 
     'commonmark' => [
-        'enable_em'              => true,
-        'enable_strong'          => true,
-        'use_asterisk'           => true,
-        'use_underscore'         => true,
+        'enable_em' => true,
+        'enable_strong' => true,
+        'use_asterisk' => true,
+        'use_underscore' => true,
         'unordered_list_markers' => ['-', '+', '*'],
     ],
 
@@ -157,7 +157,7 @@ return [
 
     'slug_normalizer' => [
         'max_length' => 255,
-        'unique'     => 'document',
+        'unique' => 'document',
     ],
 
 ];

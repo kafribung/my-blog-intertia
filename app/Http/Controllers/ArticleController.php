@@ -63,6 +63,8 @@ class ArticleController extends Controller implements HasMiddleware
      */
     public function show(Article $article)
     {
+        $article->visit()->hourlyIntervals()->withIp()->withSession()->withUser();
+
         $relatedArticles = Article::query()->select(['id', 'title', 'slug', 'teaser', 'user_id'])
             ->where('category_id', $article->category_id)
             ->with('user:id,name')
