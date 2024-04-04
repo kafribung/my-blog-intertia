@@ -48,7 +48,7 @@ export default function Show({ article }) {
                         {article.tags.length > 0 ? (
                             <div className="flex items-center gap-x-2">
                                 {article.tags.map((tag, i) => (
-                                    <Link key={i} href={`/tags/${tag.slug}`}>
+                                    <Link key={i} href={route('tags.show', [tag])}>
                                         <Badge variant="outline">{tag.name}</Badge>
                                     </Link>
                                 ))}
