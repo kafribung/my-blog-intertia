@@ -4,7 +4,7 @@ import { Head } from '@inertiajs/react';
 import { ArticleCard } from '@/pages/articles/partials/article-card';
 import { CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default function Home(props) {
+export default function Home({ ...props }) {
     const { articles, popular_articles } = props;
     return (
         <div>

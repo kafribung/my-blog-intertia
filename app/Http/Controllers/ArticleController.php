@@ -39,6 +39,10 @@ class ArticleController extends Controller implements HasMiddleware
 
         return inertia('articles/index', [
             'articles' => fn () => $articles,
+            'page_meta' => [
+                'title' => 'Articles',
+                'description' => 'This is the latest articles from our blog. Enjoy!',
+            ],
         ]);
     }
 

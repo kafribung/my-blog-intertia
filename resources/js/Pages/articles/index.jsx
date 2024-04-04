@@ -4,11 +4,19 @@ import { Head } from '@inertiajs/react';
 import { ArticleCard } from '@/pages/articles/partials/article-card';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '@/components/ui/pagination';
 
-export default function Index(props) {
+export default function Index({ page_meta, ...props }) {
     const { data: articles, meta } = props.articles;
     return (
         <>
             <Head title="Articles" />
+            <div className="-mt-6 mb-6 border-b bg-background py-6 sm:-mt-16 md:mb-16 md:py-16">
+                <Container>
+                    <h1 className="text-2xl font-semibold leading-none tracking-tight md:text-3xl">
+                        {page_meta.title}
+                    </h1>
+                    <p className="mt-4 text-lg text-muted-foreground">{page_meta.description}</p>
+                </Container>
+            </div>
             <Container>
                 {articles.length > 0 ? (
                     <div className="grid gap-y-16 sm:grid-cols-2 sm:gap-x-12 lg:grid-cols-3">

@@ -21,7 +21,7 @@ export function ArticleCard({ article }) {
                 </AspectRatio>
             </Link>
 
-            <Link className="inline-block" href={`/categories/${article.category.slug}`}>
+            <Link className="inline-block" href={route('categories.show', [article.category])}>
                 <Badge className="outline">{article.category.name}</Badge>
             </Link>
 

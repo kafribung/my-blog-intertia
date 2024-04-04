@@ -14,7 +14,8 @@ import { IconChevronDown } from '@irsyadadl/paranoid';
 import { Button } from './ui/button';
 
 export function Navbar() {
-    const { auth } = usePage().props;
+    const { auth, categories_g } = usePage().props;
+
     return (
         <nav className="border-b bg-secondary/50 py-1">
             <Container>
@@ -34,9 +35,11 @@ export function Navbar() {
                                 <IconChevronDown className="ml-2 size-4 duration-200 group-data-[state=open]:rotate-180" />
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56">
-                                <DropdownMenuItem>General</DropdownMenuItem>
-                                <DropdownMenuItem>Laravel</DropdownMenuItem>
-                                <DropdownMenuItem>Next.js</DropdownMenuItem>
+                                {categories_g.map((category) => (
+                                    <DropdownMenuItem key={category.id} asChild>
+                                        <Link href={`/articles/categories/${category.slug}`}>{category.name}</Link>
+                                    </DropdownMenuItem>
+                                ))}
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
