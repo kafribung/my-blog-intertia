@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
 use App\Models\Article;
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class CommentController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            'auth'
+            'auth',
         ];
     }
 
@@ -43,6 +44,13 @@ class CommentController extends Controller implements HasMiddleware
             'user_id' => $request->user()->id,
             'article_id' => $comment->article_id,
         ]);
+
+        return back();
+    }
+
+    public function update(CommentRequest $request, Article $article, Comment $comment)
+    {
+        $comment->update($request->validated());
 
         return back();
     }

@@ -44,7 +44,7 @@ class TagController extends Controller
             ->latest('published_at')
             ->paginate(9))
             ->additional([
-                'meta' => ['has_pages' => $self->hasPages()]
+                'meta' => ['has_pages' => $self->hasPages()],
             ]);
 
         return inertia('articles/index', [

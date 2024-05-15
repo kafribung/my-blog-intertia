@@ -42,6 +42,6 @@ class Article extends Model implements CanVisit
 
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, 'article_id', 'id');
     }
 }
