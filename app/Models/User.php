@@ -48,11 +48,16 @@ class User extends Authenticatable
 
     public function gravatar($size = 200): string
     {
-        return 'https://www.gravatar.com/avatar/'.md5(strtolower(trim($this->email))).'?s='.$size.'&d=mp';
+        return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=' . $size . '&d=mp';
     }
 
     public function articles(): HasMany
     {
         return $this->hasMany(Article::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }

@@ -7,9 +7,20 @@ import { Badge } from '@/components/ui/badge';
 import { RelatedArticles } from '@/pages/articles/partials/related-articles';
 import { Author } from '@/pages/articles/partials/author';
 import { TableOfContents } from '@/pages/articles/partials/table-of-contents';
+// import { Prose } from '@/pages/articles/partials/prose';
 import { Prose } from '@/components/prose';
+import { CommentBlock } from '@/pages/articles/comments/comment-block';
+import { useState } from 'react';
 
-export default function Show({ article }) {
+export default function Show(props) {
+    const { article, comments, auth } = props;
+    const [open, setOpen] = useState(false);
+    const [attributes, setAttributes] = useState({
+        body: '',
+        url: '',
+        method: 'post',
+        submitText: 'Comment',
+    });
     return (
         <>
             <Head title={article.title} />
@@ -54,6 +65,8 @@ export default function Show({ article }) {
                                 ))}
                             </div>
                         ) : null}
+
+                        <CommentBlock comments={comments} />
                     </div>
                 </div>
             </Container>

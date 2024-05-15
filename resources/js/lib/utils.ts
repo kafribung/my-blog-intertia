@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function limitChars(str, limit = 20) {
-    return str.length > limit ? str.slice(0, limit) + "..." : str;
+    return str.length > limit ? str.slice(0, limit) + '...' : str;
 }
 
 export function kebabCase(string) {

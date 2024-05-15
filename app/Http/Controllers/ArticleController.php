@@ -82,6 +82,13 @@ class ArticleController extends Controller implements HasMiddleware
                 $article->load(['category:id,name,slug', 'user:id,name', 'tags:id,name,slug'])
             ),
             'articles' => fn () => $relatedArticles,
+            'comments' => fn () => Resources\CommentResource::collection(
+                $article->comments()
+                    ->where('article_id', $article->id)
+                    ->whereParentId(null)
+                    ->latest()
+                    ->get()
+            ),
         ]);
     }
 
