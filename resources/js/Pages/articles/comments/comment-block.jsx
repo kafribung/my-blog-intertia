@@ -4,6 +4,7 @@ import { IconHeart, IconMessage } from '@irsyadadl/paranoid';
 import { useState } from 'react';
 import { usePage } from '@inertiajs/react';
 import { CommentForm } from '@/pages/articles/comments/comment-form';
+import { CommentOptions } from './comment-options';
 
 export function CommentBlock({ comments }) {
     const { auth, article } = usePage().props;
@@ -24,9 +25,9 @@ export function CommentBlock({ comments }) {
                     </Avatar>
 
                     <div className="relative w-full">
+                        {auth.user && <CommentOptions comment={comment} article={article} />}
                         <h4 className="text-sm font-semibold">{comment.user.name}</h4>
                         <div className="prose prose-gray text-muted-foreground dark:prose-invert">{comment.body}</div>
-
                         <div className="flex items-center gap-x-2 [&_button]:size-7 [&_button]:rounded-full [&_svg]:size-4">
                             {comment.can_be_replied && (
                                 <Button
@@ -50,7 +51,6 @@ export function CommentBlock({ comments }) {
                                 <IconHeart />
                             </Button>
                         </div>
-
                         {comment.children.length > 0 && (
                             <div className="mt-6">
                                 <CommentBlock article={article} auth={auth} comments={comment.children} />
