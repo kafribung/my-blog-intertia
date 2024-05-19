@@ -54,4 +54,37 @@ class CommentController extends Controller implements HasMiddleware
 
         return back();
     }
+
+    public function destroy(Article $article, Comment $comment)
+    {
+        $comment->delete();
+
+        return back();
+    }
+
+    public function report(Comment $comment)
+    {
+        if (!session()->has('reported_spams')) {
+            session(['reported_spams' => []]);
+        }
+
+        $commentId = $comment->id;
+        $reporterIdentifier = session()->getId();
+
+        if (!session()->has("reported_spams.$commentId")) {
+            session()->put("reported_spams.$commentId", []);
+        }
+
+        if (!in_array($reporterIdentifier, session("reported_spams.$commentId"))) {
+            $comment->increment('spam_reports');
+            session()->push("reported_spams.$commentId", $reporterIdentifier);
+
+            if ($comment->spam_reports > 10) {
+                $comment->delete();
+            }
+        }
+
+        return back();
+    }
+
 }
