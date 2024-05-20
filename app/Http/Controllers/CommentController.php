@@ -7,6 +7,8 @@ use App\Models\Article;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Gate;
+
 
 class CommentController extends Controller implements HasMiddleware
 {
@@ -33,6 +35,8 @@ class CommentController extends Controller implements HasMiddleware
 
     public function reply(Request $request, Comment $comment)
     {
+        Gate::authorize('reply', $comment);
+
         $request->validate([
             'body' => ['required', 'string', 'min:2'],
         ]);
@@ -50,6 +54,8 @@ class CommentController extends Controller implements HasMiddleware
 
     public function update(CommentRequest $request, Article $article, Comment $comment)
     {
+        Gate::authorize('update', $comment);
+
         $comment->update($request->validated());
 
         return back();
@@ -57,6 +63,8 @@ class CommentController extends Controller implements HasMiddleware
 
     public function destroy(Article $article, Comment $comment)
     {
+        Gate::authorize('delete', $comment);
+
         $comment->delete();
 
         return back();
@@ -64,6 +72,8 @@ class CommentController extends Controller implements HasMiddleware
 
     public function report(Comment $comment)
     {
+        Gate::authorize('report', $comment);
+
         if (!session()->has('reported_spams')) {
             session(['reported_spams' => []]);
         }
