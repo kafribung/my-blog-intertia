@@ -22,6 +22,7 @@ class CommentResource extends JsonResource
             'created_at' => $this->created_at->diffForHumans(),
             'can_be_replied' => $this->parent_id === null && $request->user(),
             'children' => self::collection($this->children),
+            'likes_count' => $this->likes_count,
             'user' => [
                 'id' => $this->user->id,
                 'name' => $this->user->name,

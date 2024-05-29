@@ -97,4 +97,17 @@ class CommentController extends Controller implements HasMiddleware
         return back();
     }
 
+    public function like(Request $request, Comment $comment)
+    {
+        if ($user = $request->user()) {
+            $like = $comment->likes()->where('user_id', $user->id)->first();
+
+            $like ? $like->delete() : $comment->likes()->create(['user_id' => $user->id]);
+        } else {
+            // flash message
+        }
+
+        return back();
+    }
+
 }
