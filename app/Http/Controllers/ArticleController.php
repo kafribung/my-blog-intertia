@@ -15,7 +15,7 @@ class ArticleController extends Controller implements HasMiddleware
         return [
             new Controllers\Middleware(
                 middleware: ['auth'],
-                except: ['index', 'show']
+                except: ['index', 'show', 'search']
             ),
         ];
     }
@@ -114,5 +114,27 @@ class ArticleController extends Controller implements HasMiddleware
     public function destroy(Article $article)
     {
         //
+    }
+
+    /**
+     * Search the specified resource in storage.
+     */
+    public function search(Request $request)
+    {
+        if (! $request->has('search')) {
+            return [];
+        }
+
+        return Article::query()
+            ->select('id', 'title', 'slug')
+            ->where('title', 'like', "%{$request->search}%")
+            ->whereStatus(\App\Enums\ArticleStatus::Published)
+            ->limit(20)
+            ->get()
+            ->map(fn ($article) => [
+                'id' => $article->id,
+                'title' => $article->title,
+                'href' => route('articles.show', $article->slug),
+            ]);
     }
 }

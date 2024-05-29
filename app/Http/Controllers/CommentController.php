@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\Gate;
 
-
 class CommentController extends Controller implements HasMiddleware
 {
     public static function middleware(): array
@@ -74,18 +73,18 @@ class CommentController extends Controller implements HasMiddleware
     {
         Gate::authorize('report', $comment);
 
-        if (!session()->has('reported_spams')) {
+        if (! session()->has('reported_spams')) {
             session(['reported_spams' => []]);
         }
 
         $commentId = $comment->id;
         $reporterIdentifier = session()->getId();
 
-        if (!session()->has("reported_spams.$commentId")) {
+        if (! session()->has("reported_spams.$commentId")) {
             session()->put("reported_spams.$commentId", []);
         }
 
-        if (!in_array($reporterIdentifier, session("reported_spams.$commentId"))) {
+        if (! in_array($reporterIdentifier, session("reported_spams.$commentId"))) {
             $comment->increment('spam_reports');
             session()->push("reported_spams.$commentId", $reporterIdentifier);
 
@@ -109,5 +108,4 @@ class CommentController extends Controller implements HasMiddleware
 
         return back();
     }
-
 }

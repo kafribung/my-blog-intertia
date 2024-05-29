@@ -2,6 +2,7 @@ import { IconMoon, IconMoonFill } from '@irsyadadl/paranoid';
 
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/components/theme-provider';
+import { Moon } from 'lucide-react';
 
 export function ThemeToggle() {
     const { setTheme } = useTheme();

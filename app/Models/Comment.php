@@ -12,7 +12,6 @@ class Comment extends Model
 {
     use HasFactory;
 
-
     protected function casts(): array
     {
         return [
@@ -24,7 +23,6 @@ class Comment extends Model
     protected $with = ['user', 'children'];
 
     protected $withCount = ['likes'];
-
 
     public function user(): BelongsTo
     {
