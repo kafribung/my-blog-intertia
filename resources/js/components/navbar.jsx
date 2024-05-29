@@ -16,7 +16,8 @@ import { IconChevronDown, IconSettings, IconSearch } from '@irsyadadl/paranoid';
 import { Label } from '@/components/ui/label';
 import { CommandPalette } from '@/components/command-palette';
 import { useState } from 'react';
-import { ThemeToggle } from '@/components/thema-toggle';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { ResponsiveNavbar } from '@/components/responsive-navbar';
 
 export function Navbar() {
     const { auth, categories_g } = usePage().props;
@@ -109,6 +110,8 @@ export function Navbar() {
                     </div>
                 </Container>
             </nav>
+
+            <ResponsiveNavbar open={open} setOpen={setOpen} />
         </>
     );
 }

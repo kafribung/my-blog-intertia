@@ -12,6 +12,7 @@ class AuthenticatedUserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'username' => $this->username,
             'email' => $this->email,
             'gravatar' => $this->gravatar(100),
             'initials' => $this->getInitials($this->name),

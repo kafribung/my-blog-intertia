@@ -1,6 +1,6 @@
-import { AppLayout } from '@/layouts/app-layout';
 import { Container } from '@/components/container';
 import { Head } from '@inertiajs/react';
+import { UserLayout } from '@/layouts/user-layout';
 
 export default function Dashboard() {
     return (
@@ -11,4 +11,4 @@ export default function Dashboard() {
     );
 }
 
-Dashboard.layout = (page) => <AppLayout children={page} />;
+Dashboard.layout = (page) => <UserLayout title="Dashboard" children={page} />;

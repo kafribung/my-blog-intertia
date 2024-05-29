@@ -2,7 +2,7 @@ import { DeleteUserForm } from '@/pages/profile/partials/delete-user-form';
 import { UpdatePasswordForm } from '@/pages/profile/partials/update-password-form';
 import { UpdateProfileInformationForm } from '@/pages/profile/partials/update-profile-information-form';
 import { Head } from '@inertiajs/react';
-import { AppLayout } from '@/layouts/app-layout';
+import { UserLayout } from '@/layouts/user-layout';
 
 export default function Edit({ mustVerifyEmail, status }) {
     return (
@@ -17,4 +17,4 @@ export default function Edit({ mustVerifyEmail, status }) {
     );
 }
 
-Edit.layout = (page) => <AppLayout children={page} />;
+Edit.layout = (page) => <UserLayout title="Settings" children={page} />;
