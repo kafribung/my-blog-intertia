@@ -22,7 +22,7 @@ export function Aside() {
             <AsideLink href={route('profile.edit')} active={route().current('profile.edit')}>
                 Settings
             </AsideLink>
-            <AsideLink href="#">List Articles</AsideLink>
+            <AsideLink href={route('internal-articles.index')}>List Articles</AsideLink>
             <AsideLink href="#">Categories</AsideLink>
             <AsideLink href="#">Tags</AsideLink>
             <AsideLink href="#">Comments</AsideLink>

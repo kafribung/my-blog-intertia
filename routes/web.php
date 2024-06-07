@@ -7,6 +7,9 @@ Route::get('/', Controllers\HomeController::class)->name('home');
 Route::get('dashboard', Controllers\DashboardController::class)->middleware(['auth'])->name('dashboard');
 Route::get('articles/tags/{tag:slug}', [Controllers\TagController::class, 'show'])->name('tags.show');
 Route::get('articles/categories/{category:slug}', [Controllers\CategoryController::class, 'show'])->name('categories.show');
+Route::resource('internal-articles', Controllers\InternalArticleController::class)
+    ->parameter('internal-articles', 'article')
+    ->except('show');
 Route::get('articles/search', [Controllers\ArticleController::class, 'search'])->name('articles.search');
 Route::resource('articles', Controllers\ArticleController::class)->scoped(['article' => 'slug'])->only('show', 'index');
 Route::post('comments.like/{comment}', [Controllers\CommentController::class, 'like'])->name('comments.like');
