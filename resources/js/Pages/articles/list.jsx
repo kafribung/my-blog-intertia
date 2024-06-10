@@ -20,12 +20,22 @@ import {
 } from '@irsyadadl/paranoid';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from '@inertiajs/react';
 import { Input } from '@/components/ui/input';
+import { AlertAction } from '@/components/alert-action';
+import { useFilter } from '@/hooks/use-filter';
 
 export default function List({ auth, ...props }) {
     const { data: articles, meta, links } = props.articles;
+
+    const [params, setParams] = useState(props.state);
+    useFilter({
+        route: route('internal-articles.index'),
+        values: params,
+        only: ['articles'],
+    });
+
     return (
         <div>
             <div className="mb-6 grid gap-6 sm:grid-cols-3">
@@ -56,9 +66,9 @@ export default function List({ auth, ...props }) {
                     </CardHeader>
                     <div className="flex max-w-md gap-2">
                         <Input placeholder="Search..." />
-                        <Select>
-                            <SelectTrigger className="w-40">
-                                <SelectValue placeholder="Published" />
+                        <Select value={params?.status} onValueChange={(e) => setParams({ ...params, status: e })}>
+                            <SelectTrigger className="md:w-40">
+                                <SelectValue placeholder={params?.status ?? 'Status'} />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="draft">Draft</SelectItem>
@@ -113,12 +123,51 @@ export default function List({ auth, ...props }) {
                                                 <DropdownMenuContent align="end" className="w-48">
                                                     <DropdownMenuLabel>Article ID: {article.id}</DropdownMenuLabel>
                                                     <DropdownMenuSeparator />
-                                                    <DropdownMenuItem>Edit</DropdownMenuItem>
+                                                    <DropdownMenuItem asChild>
+                                                        <Link href={route('internal-articles.edit', [article])}>
+                                                            Edit
+                                                        </Link>
+                                                    </DropdownMenuItem>
                                                     {auth.user.is_admin && (
                                                         <DropdownMenuGroup>
-                                                            <DropdownMenuItem>Published</DropdownMenuItem>
+                                                            <AlertAction
+                                                                trigger={
+                                                                    <DropdownMenuItem
+                                                                        onSelect={(e) => e.preventDefault()}
+                                                                    >
+                                                                        {article.status !== 'published'
+                                                                            ? 'Publish'
+                                                                            : 'Unpublished'}
+                                                                    </DropdownMenuItem>
+                                                                }
+                                                                title="Publish Article"
+                                                                description="Are you sure you want to publish this article?"
+                                                                action={() =>
+                                                                    router.put(
+                                                                        route('internal-articles.approve', [article]),
+                                                                        {},
+                                                                        { preserveScroll: true },
+                                                                    )
+                                                                }
+                                                            />
                                                             <DropdownMenuSeparator />
-                                                            <DropdownMenuItem>Delete</DropdownMenuItem>
+                                                            <AlertAction
+                                                                trigger={
+                                                                    <DropdownMenuItem
+                                                                        onSelect={(e) => e.preventDefault()}
+                                                                    >
+                                                                        Delete
+                                                                    </DropdownMenuItem>
+                                                                }
+                                                                title="Delete Article"
+                                                                description="Are you sure you want to delete this article?"
+                                                                action={() =>
+                                                                    router.delete(
+                                                                        route('internal-articles.destroy', [article]),
+                                                                        { preserveScroll: true },
+                                                                    )
+                                                                }
+                                                            />
                                                         </DropdownMenuGroup>
                                                     )}
                                                 </DropdownMenuContent>
