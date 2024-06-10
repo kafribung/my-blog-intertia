@@ -23,7 +23,7 @@ class ArticleSingleResource extends JsonResource
             'thumbnail' => $this->thumbnail ? Storage::url($this->thumbnail) : null,
             'teaser' => $this->teaser,
             'content' => Markdown::convert($this->content)->getContent(),
-            'published_at' => $this->published_at->format('d F Y'),
+            'published_at' => $this->published_at?->format('d F Y'),
             'category' => [
                 'id' => $this->category->id,
                 'name' => $this->category->name,

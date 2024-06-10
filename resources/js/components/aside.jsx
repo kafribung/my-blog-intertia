@@ -23,7 +23,9 @@ export function Aside() {
                 Settings
             </AsideLink>
             <AsideLink href={route('internal-articles.index')}>List Articles</AsideLink>
-            <AsideLink href="#">Categories</AsideLink>
+            <AsideLink href={route('categories.index')} active={route().current('categories.*')}>
+                Categories
+            </AsideLink>
             <AsideLink href="#">Tags</AsideLink>
             <AsideLink href="#">Comments</AsideLink>
         </nav>
