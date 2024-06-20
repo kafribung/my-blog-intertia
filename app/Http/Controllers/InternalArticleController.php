@@ -53,9 +53,30 @@ class InternalArticleController extends Controller implements HasMiddleware
             ],
         ]);
 
-        return inertia('articles/list', [
+        return inertia('articles/internal-articles/list', [
             'articles' => fn () => $articles,
             'state' => $request->only('page', 'status', 'search'),
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return inertia('articles/internal-articles/form', [
+            'page_data' => fn () => [
+                'categories' => fn () => Models\Category::toSelectArray(),
+                'tags' => fn () => Models\Tag::toSelectArray(),
+                'article' => fn () => new Models\Article(),
+                'statuses' => fn () => ArticleStatus::toSelectArray(),
+            ],
+            'page_meta' => [
+                'title' => 'Create new Article',
+                'description' => "Grow your audience by creating the best articles'.",
+                'url' => route('internal-articles.store'),
+                'method' => 'put',
+            ],
         ]);
     }
 
@@ -79,7 +100,7 @@ class InternalArticleController extends Controller implements HasMiddleware
 
     public function edit(Models\Article $article)
     {
-        return inertia('articles/form', [
+        return inertia('articles/internal-articles/form', [
             'page_data' => fn () => [
                 'categories' => fn () => Models\Category::toSelectArray(),
                 'tags' => fn () => Models\Tag::toSelectArray(),

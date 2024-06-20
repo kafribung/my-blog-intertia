@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Controllers\HomeController::class)->name('home');
 Route::get('dashboard', Controllers\DashboardController::class)->middleware(['auth'])->name('dashboard');
 
+Route::resource('tags', Controllers\TagController::class)
+    ->except(['show'])
+    ->middleware(['auth', 'role:admin']);
+
 Route::resource('categories', Controllers\CategoryController::class)
     ->except(['show'])
     ->middleware(['auth', 'role:admin']);

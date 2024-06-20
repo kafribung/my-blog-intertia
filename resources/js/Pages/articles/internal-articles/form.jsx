@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { MultiSelect } from '@/components/multi-select';
+import { MultiSelect } from '@/components/ui/multi-select';
 import { InputErrorMessage } from '@/components/input-error-message';
 import { Textarea } from '@/components/ui/textarea';
 import { FileUpload } from '@/components/file-upload';
@@ -49,8 +49,8 @@ export default function Form({ auth, page_meta, page_data }) {
         setData('tags', transformTags());
     }, [selected]);
 
-    return;
-    <Card>
+    return (
+        <Card>
         <CardHeader>
             <CardTitle>{page_meta.title}</CardTitle>
             <CardDescription>{page_meta.description}</CardDescription>
@@ -87,8 +87,9 @@ export default function Form({ auth, page_meta, page_data }) {
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Select category">
-                                        {page_data.categories.find((category) => category.value == data.category_id)
-                                            ?.label ?? 'Select a status'}
+                                        {page_data.categories.find(
+                                            (category) => category.value == data.category_id,
+                                        )?.label ?? 'Select a status'}
                                     </SelectValue>
                                 </SelectTrigger>
                                 <SelectContent>
@@ -104,16 +105,23 @@ export default function Form({ auth, page_meta, page_data }) {
                         {auth.user.is_admin && (
                             <div>
                                 <Label htmlFor="status">Status</Label>
-                                <Select defaultValue={data.status} onValueChange={(value) => setData('status', value)}>
+                                <Select
+                                    defaultValue={data.status}
+                                    onValueChange={(value) => setData('status', value)}
+                                >
                                     <SelectTrigger className="mt-1 capitalize">
                                         <SelectValue>
-                                            {page_data.statuses.find((status) => status.value == data.status)?.label ??
-                                                'Select a status'}
+                                            {page_data.statuses.find((status) => status.value == data.status)
+                                                ?.label ?? 'Select a status'}
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
                                         {page_data.statuses.map((status) => (
-                                            <SelectItem key={status.value} value={status.value} className="capitalize">
+                                            <SelectItem
+                                                key={status.value}
+                                                value={status.value}
+                                                className="capitalize"
+                                            >
                                                 {status.label}
                                             </SelectItem>
                                         ))}
@@ -143,7 +151,8 @@ export default function Form({ auth, page_meta, page_data }) {
                 </Button>
             </CardFooter>
         </form>
-    </Card>;
+    </Card>
+    );
 }
 
 Form.layout = (page) => <UserLayout title={page.props.page_meta.title} children={page} />;
