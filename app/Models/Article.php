@@ -33,6 +33,11 @@ class Article extends Model implements CanVisit
         return $this->belongsTo(User::class);
     }
 
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
+
     public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');

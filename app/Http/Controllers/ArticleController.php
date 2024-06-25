@@ -15,7 +15,7 @@ class ArticleController extends Controller implements HasMiddleware
         return [
             new Controllers\Middleware(
                 middleware: ['auth'],
-                except: ['index', 'show', 'search']
+                except: ['index', 'show', 'search', 'like']
             ),
         ];
     }
@@ -82,7 +82,7 @@ class ArticleController extends Controller implements HasMiddleware
 
         return inertia('articles/show', [
             'article' => fn () => new Resources\ArticleSingleResource(
-                $article->load(['category:id,name,slug', 'user:id,name', 'tags:id,name,slug'])
+                $article->loadCount('likes')->load(['category:id,name,slug', 'user:id,name', 'tags:id,name,slug'])
             ),
             'articles' => fn () => $relatedArticles,
             'comments' => fn () => Resources\CommentResource::collection(
@@ -139,5 +139,22 @@ class ArticleController extends Controller implements HasMiddleware
                 'title' => $article->title,
                 'href' => route('articles.show', $article->slug),
             ]);
+    }
+
+    public function like(Request $request, Article $article)
+    {
+        if ($request->user()) {
+            $like = $article->likes()->where('user_id', $request->user()->id)->first();
+
+            if ($like) {
+                $like->delete();
+            } else {
+                $article->likes()->create(['user_id' => $request->user()->id]);
+            }
+        } else {
+            // flash message
+        }
+
+        return back();
     }
 }

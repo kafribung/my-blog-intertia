@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Controllers\HomeController::class)->name('home');
 Route::get('dashboard', Controllers\DashboardController::class)->middleware(['auth'])->name('dashboard');
 
+Route::post('/articles/{article}/like', [Controllers\ArticleController::class, 'like'])->name('articles.like');
+
 Route::resource('tags', Controllers\TagController::class)
     ->except(['show'])
     ->middleware(['auth', 'role:admin']);

@@ -13,6 +13,8 @@ import { CommentBlock } from '@/pages/articles/comments/comment-block';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { CommentForm } from '@/pages/articles/comments/comment-form';
+import { Share } from './partials/share';
+import { Like } from './partials/like';
 
 export default function Show(props) {
     const { article, comments, auth } = props;
@@ -49,9 +51,13 @@ export default function Show(props) {
                         <div className="flex items-center text-sm text-muted-foreground">
                             <time>{article.published_at}</time>
                             <span className="mx-2">|</span>
-                            <Link href={`/categories/${article.category.slug}`}>
+                            <Link href={route('categories.show', article.category.slug)}>
                                 <Badge className="outline">{article.category.name}</Badge>
                             </Link>
+                            <div className="flex gap-x-1">
+                                <Share article={article} />
+                                <Like article={article} />
+                            </div>
                         </div>
 
                         <p className="text-muted-foreground">{article.teaser}</p>
