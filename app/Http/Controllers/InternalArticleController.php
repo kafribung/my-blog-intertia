@@ -75,7 +75,7 @@ class InternalArticleController extends Controller implements HasMiddleware
                 'title' => 'Create new Article',
                 'description' => "Grow your audience by creating the best articles'.",
                 'url' => route('internal-articles.store'),
-                'method' => 'put',
+                'method' => 'post',
             ],
         ]);
     }
@@ -111,7 +111,7 @@ class InternalArticleController extends Controller implements HasMiddleware
                 'title' => 'Edit Article',
                 'description' => "Edit the article titled '{$article->title}'.",
                 'url' => route('internal-articles.update', $article),
-                'method' => 'put',
+                'method' => 'PUT',
             ],
         ]);
     }

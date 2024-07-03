@@ -4,6 +4,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { useEffect } from 'react';
+import { flashMessage } from '@/lib/utils';
 
 export function CommentForm(props) {
     const { data, post, setData, reset, processing, errors } = useForm({
@@ -18,6 +19,10 @@ export function CommentForm(props) {
             onSuccess: () => {
                 reset();
                 props.setOpen(false);
+                const flash = flashMessage(params);
+                if (flash) {
+                    toast[flash.type](flash.message);
+                }
             },
             preserveScroll: true,
         });

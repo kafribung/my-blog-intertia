@@ -10,9 +10,11 @@ import { MultiSelect } from '@/components/ui/multi-select';
 import { InputErrorMessage } from '@/components/input-error-message';
 import { Textarea } from '@/components/ui/textarea';
 import { FileUpload } from '@/components/file-upload';
+import { flashMessage } from '@/lib/utils';
+import { toast } from 'sonner';
 
 export default function Form({ auth, page_meta, page_data }) {
-    const { data, setData, post, errors, processing } = useForm({
+    const { data, setData, post, put, errors, processing } = useForm({
         thumbnail: null,
         category_id: page_data.article?.category_id ?? '',
         title: page_data.article?.title ?? '',
@@ -34,7 +36,28 @@ export default function Form({ auth, page_meta, page_data }) {
 
     function submit(e) {
         e.preventDefault();
-        post(page_meta.url);
+        console.log(page_meta.method);
+        if (page_meta.method === 'post') {
+            post(page_meta.url, {
+                preserveScroll: true,
+                onSuccess: (params) => {
+                    const flash = flashMessage(params);
+                    if (flash) {
+                        toast[flash.type](flash.message);
+                    }
+                },
+            });
+        } else {
+            put(page_meta.url, {
+                preserveScroll: true,
+                onSuccess: (params) => {
+                    const flash = flashMessage(params);
+                    if (flash) {
+                        toast[flash.type](flash.message);
+                    }
+                },
+            });
+        }
     }
 
     function onChange(e) {
@@ -51,107 +74,106 @@ export default function Form({ auth, page_meta, page_data }) {
 
     return (
         <Card>
-        <CardHeader>
-            <CardTitle>{page_meta.title}</CardTitle>
-            <CardDescription>{page_meta.description}</CardDescription>
-        </CardHeader>
-        <form onSubmit={submit}>
-            <CardContent>
-                <div className="space-y-6">
-                    <div className="max-w-2xl space-y-1">
-                        <Label>Thumbnail</Label>
-                        <FileUpload onChange={(file) => setData('thumbnail', file)} />
-                        <InputErrorMessage message={errors.thumbnail} />
-                    </div>
-                    <div className="space-y-1">
-                        <Label>Title</Label>
-                        <Input name="title" onChange={onChange} value={data.title} />
-                        <InputErrorMessage message={errors.title} />
-                    </div>
-                    <div className="space-y-1">
-                        <Label>Teaser</Label>
-                        <Textarea name="teaser" onChange={onChange} value={data.teaser} />
-                        <InputErrorMessage message={errors.teaser} />
-                    </div>
-                    <div className="space-y-1">
-                        <Label>Content</Label>
-                        <Textarea name="content" autoSize onChange={onChange} value={data.content} />
-                        <InputErrorMessage message={errors.content} />
-                    </div>
-                    <div className="grid grid-cols-2 gap-6">
-                        <div className="space-y-1">
-                            <Label>Category</Label>
-                            <Select
-                                defaultValue={data.category_id}
-                                onValueChange={(value) => setData('category_id', value)}
-                            >
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Select category">
-                                        {page_data.categories.find(
-                                            (category) => category.value == data.category_id,
-                                        )?.label ?? 'Select a status'}
-                                    </SelectValue>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {page_data.categories.map((category) => (
-                                        <SelectItem key={category.value} value={category.value}>
-                                            {category.label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            <InputErrorMessage message={errors.category_id} />
+            <CardHeader>
+                <CardTitle>{page_meta.title}</CardTitle>
+                <CardDescription>{page_meta.description}</CardDescription>
+            </CardHeader>
+            <form onSubmit={submit}>
+                <CardContent>
+                    <div className="space-y-6">
+                        <div className="max-w-2xl space-y-1">
+                            <Label>Thumbnail</Label>
+                            <FileUpload onChange={(file) => setData('thumbnail', file)} />
+                            <InputErrorMessage message={errors.thumbnail} />
                         </div>
-                        {auth.user.is_admin && (
-                            <div>
-                                <Label htmlFor="status">Status</Label>
+                        <div className="space-y-1">
+                            <Label>Title</Label>
+                            <Input name="title" onChange={onChange} value={data.title} />
+                            <InputErrorMessage message={errors.title} />
+                        </div>
+                        <div className="space-y-1">
+                            <Label>Teaser</Label>
+                            <Textarea name="teaser" onChange={onChange} value={data.teaser} />
+                            <InputErrorMessage message={errors.teaser} />
+                        </div>
+                        <div className="space-y-1">
+                            <Label>Content</Label>
+                            <Textarea name="content" autoSize onChange={onChange} value={data.content} />
+                            <InputErrorMessage message={errors.content} />
+                        </div>
+                        <div className="grid grid-cols-2 gap-6">
+                            <div className="space-y-1">
+                                <Label>Category</Label>
                                 <Select
-                                    defaultValue={data.status}
-                                    onValueChange={(value) => setData('status', value)}
+                                    defaultValue={data.category_id}
+                                    onValueChange={(value) => setData('category_id', value)}
                                 >
-                                    <SelectTrigger className="mt-1 capitalize">
-                                        <SelectValue>
-                                            {page_data.statuses.find((status) => status.value == data.status)
+                                    <SelectTrigger className="w-full">
+                                        <SelectValue placeholder="Select category">
+                                            {page_data.categories.find((category) => category.value == data.category_id)
                                                 ?.label ?? 'Select a status'}
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {page_data.statuses.map((status) => (
-                                            <SelectItem
-                                                key={status.value}
-                                                value={status.value}
-                                                className="capitalize"
-                                            >
-                                                {status.label}
+                                        {page_data.categories.map((category) => (
+                                            <SelectItem key={category.value} value={category.value}>
+                                                {category.label}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>
-
-                                <InputErrorMessage message={errors.status} />
+                                <InputErrorMessage message={errors.category_id} />
                             </div>
-                        )}
+                            {auth.user.is_admin && (
+                                <div>
+                                    <Label htmlFor="status">Status</Label>
+                                    <Select
+                                        defaultValue={data.status}
+                                        onValueChange={(value) => setData('status', value)}
+                                    >
+                                        <SelectTrigger className="mt-1 capitalize">
+                                            <SelectValue>
+                                                {page_data.statuses.find((status) => status.value == data.status)
+                                                    ?.label ?? 'Select a status'}
+                                            </SelectValue>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {page_data.statuses.map((status) => (
+                                                <SelectItem
+                                                    key={status.value}
+                                                    value={status.value}
+                                                    className="capitalize"
+                                                >
+                                                    {status.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+
+                                    <InputErrorMessage message={errors.status} />
+                                </div>
+                            )}
+                        </div>
+                        <div className="space-y-1">
+                            <Label>Tags</Label>
+                            <MultiSelect
+                                max={3}
+                                items={page_data.tags}
+                                selected={selected}
+                                setSelected={setSelected}
+                                placeholder="Select tags..."
+                            />
+                            <InputErrorMessage message={errors.tags} />
+                        </div>
                     </div>
-                    <div className="space-y-1">
-                        <Label>Tags</Label>
-                        <MultiSelect
-                            max={3}
-                            items={page_data.tags}
-                            selected={selected}
-                            setSelected={setSelected}
-                            placeholder="Select tags..."
-                        />
-                        <InputErrorMessage message={errors.tags} />
-                    </div>
-                </div>
-            </CardContent>
-            <CardFooter>
-                <Button disabled={processing} type="submit">
-                    Save
-                </Button>
-            </CardFooter>
-        </form>
-    </Card>
+                </CardContent>
+                <CardFooter>
+                    <Button disabled={processing} type="submit">
+                        Save
+                    </Button>
+                </CardFooter>
+            </form>
+        </Card>
     );
 }
 
