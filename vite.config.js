@@ -11,4 +11,10 @@ export default defineConfig({
         }),
         react(),
     ],
+    ssr: {
+        noExternal: [
+            'react-share',
+            'lodash',
+        ]
+    },
 });

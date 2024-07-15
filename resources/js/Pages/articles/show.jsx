@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { CommentForm } from '@/pages/articles/comments/comment-form';
 import { Share } from './partials/share';
 import { Like } from './partials/like';
+import { MetaTags } from '@/components/meta-tags';
 
 export default function Show(props) {
     const { article, comments, auth } = props;
@@ -28,6 +29,12 @@ export default function Show(props) {
     return (
         <>
             <Head title={article.title} />
+            <MetaTags
+                title={article.title}
+                description={article.teaser}
+                url={route('articles.show', [article])}
+                image={article.thumbnail}
+            />
             <Container>
                 <div className="flex flex-col-reverse gap-y-16 lg:grid lg:grid-cols-3 lg:gap-x-16">
                     <div className="space-y-12 lg:sticky lg:top-10 lg:col-span-1">

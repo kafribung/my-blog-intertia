@@ -19,7 +19,11 @@ Route::resource('categories', Controllers\CategoryController::class)
 Route::get('articles/tags/{tag:slug}', [Controllers\TagController::class, 'show'])->name('tags.show');
 Route::get('articles/categories/{category:slug}', [Controllers\CategoryController::class, 'show'])->name('categories.show');
 Route::get('articles/search', [Controllers\ArticleController::class, 'search'])->name('articles.search');
-Route::resource('articles', Controllers\ArticleController::class)->scoped(['article' => 'slug'])->only('show', 'index');
+Route::get('articles/{article:slug}', [Controllers\ArticleController::class, 'show'])
+    ->name('articles.show')
+    ->where('article', '^(?!latest|trending|most-likes|year|month|week|all-time)[a-z0-9-]+$');
+Route::get('articles/{key?}', [Controllers\ArticleController::class, 'index'])
+    ->name('articles.index');
 
 Route::get('internal-articles/approve/{article}', [Controllers\InternalArticleController::class, 'approve'])->name('internal-articles.approve');
 Route::resource('internal-articles', Controllers\InternalArticleController::class)
@@ -37,4 +41,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('profile', [Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

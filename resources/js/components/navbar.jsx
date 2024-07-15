@@ -18,6 +18,7 @@ import { CommandPalette } from '@/components/command-palette';
 import { useState } from 'react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { ResponsiveNavbar } from '@/components/responsive-navbar';
+import { Filter } from './filter';
 
 export function Navbar() {
     const { auth, categories_g } = usePage().props;
@@ -34,6 +35,7 @@ export function Navbar() {
                             <Logo />
                             <NavLink href="/">Home</NavLink>
                             <NavLink href="/articles">Articles</NavLink>
+                            <Filter />
                             <DropdownMenu>
                                 <DropdownMenuTrigger
                                     className={cn(
